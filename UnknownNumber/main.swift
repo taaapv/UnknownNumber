@@ -7,21 +7,25 @@
 
 import Foundation
 let randomNumber = String(arc4random_uniform(5))
-
 print("Компьютер случайным образом загадал число. Вам требуется его отгадать.")
 
-var myNumber: String?
+let message = [
+	"start": "Введите ваш вариант числа",
+	"more": "Загаданное число больше",
+	"less": "Загаданное число меньше",
+	"win": "Вы угадали"
+]
+var userNumber: String = ""
+
 repeat {
-	print("Введите ваш вариант числа")
-	myNumber = readLine()
-	guard let myNumber = myNumber else {
-		print("Некорректный ввод числа")
-		continue
+	print(message["start"] ?? "")
+	let myNumber = readLine()
+	userNumber = myNumber ?? ""
+
+	if userNumber < randomNumber {
+		print(message["more"] ?? "")
+	} else if userNumber > randomNumber {
+		print(message["less"] ?? "")
 	}
-	if myNumber < randomNumber {
-		print("Загаданное число больше")
-	} else if myNumber > randomNumber {
-		print("Загаданное число меньше")
-	}
-} while myNumber != randomNumber
-print("Вы угадали")
+} while userNumber != randomNumber
+print(message["win"] ?? "")
